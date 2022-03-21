@@ -1,8 +1,8 @@
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', () => {
 
     // Tabs
 
-    let tabs = document.querySelectorAll('.tabheader__item'),
+    const tabs = document.querySelectorAll('.tabheader__item'),
         tabsContent = document.querySelectorAll('.tabcontent'),
         tabsParent = document.querySelector('.tabheader__items');
 
@@ -41,35 +41,34 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // Timer
 
-    const deadline = '2022-05-09';
-    // const deadLine = new Date(new Date().getTime() + 10 * (24 * 60 * 60 * 1000));
+    // const deadline = '2022-05-09';
 
+    const deadline = new Date(new Date().getTime() + 10 * (24 * 60 * 60 * 1000));
 
-    function getTimeRemaining(endtime) {
-        const t = Date.parse(endtime) - Date.parse(new Date()),
-            days = Math.floor((t / (1000 * 60 * 60 * 24))),
-            seconds = Math.floor((t / 1000) % 60),
-            minutes = Math.floor((t / 1000 / 60) % 60),
-            hours = Math.floor((t / (1000 * 60 * 60) % 24));
+    function endTimeRemaining(endTime = new Date()) {
+        const t = Date.parse(endTime) - Date.parse(new Date());
 
         return {
-            'total': t,
-            'days': days,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds
+            total: t,
+            days: Math.floor(t / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((t / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((t / (1000 * 60)) % 60),
+            seconds: Math.floor((t / 1000) % 60),
         };
     }
 
-    function getZero(num) {
-        if (num >= 0 && num < 10) {
-            return '0' + num;
-        } else {
-            return num;
-        }
-    }
+    // function getZero(num) {
+    //     // if (num >= 0 && num < 10) {
+    //     //     return `0${num}`;
+    //     // } else {
+    //     //     return num;
+    //     // }
+    //     return (num >= 0 && num < 10) ? `0${num}` : num;
+    // }
 
-    function setClock(selector, endtime) {
+    const getZero = (num) => (num >= 0 && num < 10) ? `0${num}` : num;
+
+    function setClock(selector, endTime) {
 
         const timer = document.querySelector(selector),
             days = timer.querySelector("#days"),
@@ -81,16 +80,15 @@ window.addEventListener('DOMContentLoaded', function () {
         updateClock();
 
         function updateClock() {
-            const t = getTimeRemaining(endtime);
-
+            let t = endTimeRemaining(endTime);
+            if (t.total <= 0) {
+                clearInterval(timerInterval);
+                t = endTimeRemaining();
+            }
             days.innerHTML = getZero(t.days);
             hours.innerHTML = getZero(t.hours);
             minutes.innerHTML = getZero(t.minutes);
             seconds.innerHTML = getZero(t.seconds);
-
-            if (t.total <= 0) {
-                clearInterval(timeInterval);
-            }
         }
     }
 
