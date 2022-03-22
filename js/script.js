@@ -41,9 +41,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Timer
 
-    // const deadline = '2022-05-09';
-
-    const deadline = new Date(new Date().getTime() + 10 * (24 * 60 * 60 * 1000));
+    const deadline = '2022-03-22';
+    // const deadline = new Date(new Date().getTime() + 10 * (24 * 60 * 60 * 1000));
 
     function endTimeRemaining(endTime = new Date()) {
         const t = Date.parse(endTime) - Date.parse(new Date());
