@@ -41,7 +41,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Timer
 
-    const deadline = '2022-05-09';
+    // const deadline = '2022-05-09';
+    const deadline = new Date(new Date().getTime() + 5000);
     // const deadline = new Date(new Date().getTime() + 10 * (24 * 60 * 60 * 1000));
 
     function endTimeRemaining(endTime = new Date()) {
@@ -65,13 +66,13 @@ window.addEventListener('DOMContentLoaded', () => {
             hours = timer.querySelector('#hours'),
             minutes = timer.querySelector('#minutes'),
             seconds = timer.querySelector('#seconds'),
-            timeInterval = setInterval(updateClock, 1000);
+            timerInterval = setInterval(updateClock, 1000);
 
         updateClock();
 
         function updateClock() {
             let t = endTimeRemaining(endTime);
-            if (t.total <= 0) {
+            if (t.total < 0) {
                 clearInterval(timerInterval);
                 t = endTimeRemaining();
             }
