@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         function updateClock() {
             let t = endTimeRemaining(endTime);
-            if (t.total < 0) {
+            if (t.total <= 0) {
                 clearInterval(timerInterval);
                 t = endTimeRemaining();
             }
